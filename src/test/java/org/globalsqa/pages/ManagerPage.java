@@ -1,5 +1,6 @@
 package org.globalsqa.pages;
 
+import io.qameta.allure.Step;
 import org.globalsqa.helpers.ConfigReader;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -21,15 +22,17 @@ public class ManagerPage extends  BasePage{
     }
 
     @Override
+    @Step("Open Manager Page")
     public ManagerPage navigate() {
         driver.get(getUri());
         return this;
     }
-
+    @Step("Open Add Customer Page")
     public AddCustomerPage clickAddCustomer(){
         navigateCustomerCreationButton.click();
         return new AddCustomerPage(driver);
     }
+    @Step("Open Customers List Page")
     public CustomersListPage clickCustomers(){
         navigateCustomersListButton.click();
         return new CustomersListPage(driver);

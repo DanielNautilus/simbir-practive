@@ -34,31 +34,4 @@ abstract class BasePage {
         element.sendKeys(value);
     }
 
-    protected void scrollToElement(By locator) {
-        WebElement element = driver.findElement(locator);
-        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", element);
-        wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
-    }
-
-    protected void removeElement(By locator) {
-        try {
-            WebElement adBanner = driver.findElement(locator);
-            ((JavascriptExecutor) driver).executeScript("arguments[0].remove();", adBanner);
-        } catch (NoSuchElementException ignored) {
-
-        }
-    }
-
-    protected void nativeClick(By locator) {
-        var submitButton = driver.findElement(locator);
-        var executor = (JavascriptExecutor) driver;
-        executor.executeScript("arguments[0].click();", submitButton);
-    }
-
-    protected void selectOptionInDropdown(By dropdownLocator, String option) {
-        WebElement dropdown = driver.findElement(dropdownLocator);
-        Select dropdownOptions = new Select(dropdown);
-        dropdownOptions.selectByVisibleText(option);
-    }
-
 }

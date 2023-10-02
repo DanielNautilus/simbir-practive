@@ -21,6 +21,7 @@ abstract class BaseTests {
     @AfterEach
     protected void teardown() {
         localStorageHelper.clearLocalStorage();
+        DriverHelper.closeDriver();
     }
 
     @AfterAll

@@ -26,7 +26,7 @@ public class CustomerSortTest extends BaseTests {
     @DisplayName("Sort customer: customers descending order")
     @Description("Set all 5 customers, in descending order")
     @Execution(ExecutionMode.CONCURRENT)
-    public void Test_CustomerSort_SortByFirstNameDesc_customersSortedByFirstNameInDescOrder() {
+    public void testCustomerSortSortByFirstNameDescCustomersSortedByFirstNameInDescOrder() {
         // Arrange
         String sortOrder = "descending";
         ManagerPage managerPage = new ManagerPage(driver).navigate();

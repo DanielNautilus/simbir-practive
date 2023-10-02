@@ -29,27 +29,32 @@ public class AddCustomerPage extends BasePage {
         path = ConfigReader.getProperty("managerPage.addCustomer.url");
         dialogHelper = new NativeBrowserDialogHelper(driver);
     }
+
     @Step("set First Name: {firstName}")
     public AddCustomerPage setFirstName(String firstName){
         setInputValue(firstNameInput,firstName);
         return this;
     }
+
     @Step("set Last Name: {lastName}")
     public AddCustomerPage setLastName(String lastName){
         setInputValue(lastNameInput,lastName);
         return this;
     }
+
     @Step("set Post Code: {postCode}")
     public AddCustomerPage setPostCode(String postCode){
         setInputValue(postCodeInput,postCode);
         return this;
     }
+
     @Step("Submit Customer creation, confirm dialog opens")
     public AddCustomerPage submitCreationForm(){
         formSubmit.click(); //Confirm native dialog opens
         dialogHelper.acceptAlert(); //Confirm native dialog alert
         return this;
     }
+
     @Step("Get dialog alert text")
     public String getConfirmCreationAlertText(){
         return dialogHelper.getAlertText(); //Confirm native dialog alert

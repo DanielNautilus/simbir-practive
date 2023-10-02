@@ -1,6 +1,8 @@
 package org.globalsqa.tests;
 
 import io.qameta.allure.*;
+import org.globalsqa.helpers.LocalStorageHelper;
+import org.globalsqa.models.CustomerModel;
 import org.globalsqa.pages.CustomersListPage;
 import org.globalsqa.pages.ManagerPage;
 import org.junit.jupiter.api.Assertions;
@@ -23,11 +25,15 @@ public class CustomerSearchTest extends BaseTests {
     @DisplayName("Search customer: displayed at customers list")
     @Description("Searching customer exist ")
     @Execution(ExecutionMode.CONCURRENT)
-    public void Test_CustomerSearch_fullNameMatch_customerExist() {
+    public void testCustomerSearchFullNameMatchCustomerExist() {
         //Arrange
+
         String expectedCustomerName = "Hermoine";
         ManagerPage managerPage = new ManagerPage(driver).navigate();
         CustomersListPage customerListPage = managerPage.clickCustomers();
+        LocalStorageHelper localStorageHelper = new LocalStorageHelper(driver);
+        int currentMaxId = localStorageHelper.getMaxUserId();
+        CustomerModel expectedCustomer = new CustomerModel("Daniel","Yurtaev","444431",currentMaxId+1);
 
         // Act
         WebElement customerRow = customerListPage

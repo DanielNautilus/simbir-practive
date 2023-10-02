@@ -21,6 +21,7 @@ public class CustomersListPage extends BasePage {
         PageFactory.initElements(driver, this);
         customersTableComponent = new CustomersTableComponent(driver);
     }
+
     @Step("Search customer by therm: {searchTerm}")
     public CustomersListPage searchCustomer(String searchTerm) {
         setInputValue(searchCustomerInput,searchTerm);

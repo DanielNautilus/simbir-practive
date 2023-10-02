@@ -10,6 +10,8 @@ import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.parallel.Execution;
 import org.junit.jupiter.api.parallel.ExecutionMode;
 
+import java.util.List;
+
 @Epic("Customer Management")
 @Feature("Creation")
 @DisplayName("Create customer creation tests")
@@ -23,15 +25,20 @@ public class CustomerCreationTest extends BaseTests {
     @DisplayName("Create customer: added, set in local storage")
     @Description("Set all fields creat customer, added to local storage")
     @Execution(ExecutionMode.CONCURRENT)
-    public void Test_CustomerCreation_singleAdded_recordInLocalStorage() {
+    public void testCustomerCreationSingleAddedRecordInLocalStorage() {
         // Arrange
-        int expectedMaxUserId = 6;
-        CustomerModel expectedCustomer = new CustomerModel("fName","lName","12345",expectedMaxUserId);
-        String expectedDialogText = "Customer added successfully with customer id :" + expectedMaxUserId;
+        ManagerPage managerPage = new ManagerPage(driver).navigate();
         LocalStorageHelper localStorageHelper = new LocalStorageHelper(driver);
+        int expectedUserId = localStorageHelper.getMaxUserId() + 1;
+        CustomerModel expectedCustomer = new CustomerModel(
+                "fName",
+                "lName",
+                "12345",
+                expectedUserId
+        );
+        String expectedDialogText = "Customer added successfully with customer id :" + expectedUserId;
 
         // Act
-        ManagerPage managerPage = new ManagerPage(driver).navigate();
         AddCustomerPage addCustomerPage = managerPage.clickAddCustomer();
         addCustomerPage
                 .setFirstName(expectedCustomer.getFirstName())
@@ -40,13 +47,13 @@ public class CustomerCreationTest extends BaseTests {
                 .submitCreationForm();
 
         // Assert
-        assertLocalStorageContainsCustomer(expectedCustomer, localStorageHelper);
-        assertMaxUserIdEquivalent(expectedMaxUserId, localStorageHelper);
-        assertDialogText(expectedDialogText, addCustomerPage);
+        assertLocalStorageContainsCustomer(expectedCustomer, localStorageHelper.getCustomersFromLocalStorage());
+        assertMaxUserIdEquivalent(expectedUserId, localStorageHelper.getMaxUserId());
+        assertDialogText(expectedDialogText, addCustomerPage.getConfirmCreationAlertText());
     }
+
     @Step("Local storage: contains expected Customer")
-    private void assertLocalStorageContainsCustomer(CustomerModel expectedCustomer, LocalStorageHelper localStorageHelper) {
-        var customers = localStorageHelper.getCustomersFromLocalStorage();
+    private void assertLocalStorageContainsCustomer(CustomerModel expectedCustomer, List<CustomerModel> customers) {
         boolean customerFound = customers.stream()
                 .anyMatch(customer ->
                         customer.getFirstName().equals(expectedCustomer.getFirstName())
@@ -56,17 +63,16 @@ public class CustomerCreationTest extends BaseTests {
                 );
         Assertions.assertTrue(customerFound, "New customer not found in the local storage");
     }
+
     @Step("Local storage: expected {expectedMaxUserId} equivalent actual exist")
-    private void assertMaxUserIdEquivalent(int expectedMaxUserId, LocalStorageHelper localStorageHelper) {
-        int actualMaxUserId = localStorageHelper.getMaxUserId();
+    private void assertMaxUserIdEquivalent(int expectedMaxUserId, int actualMaxUserId) {
         Assertions.assertEquals(expectedMaxUserId, actualMaxUserId, "Last added customer id not increased");
     }
+
     @Step("Dialog: text of dialog equivalent")
-    private void assertDialogText(String expectedDialogText, AddCustomerPage addCustomerPage) {
-        String actualDialogText = addCustomerPage.getConfirmCreationAlertText();
+    private void assertDialogText(String expectedDialogText, String actualDialogText) {
         Assertions.assertEquals(expectedDialogText, actualDialogText, "Dialog text does not match expected");
     }
-
 
 
 }
