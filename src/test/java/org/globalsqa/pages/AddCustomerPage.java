@@ -8,7 +8,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-public class AddCustomerPage extends BasePage {
+public class AddCustomerPage extends ManagerPage {
     private final NativeBrowserDialogHelper dialogHelper;
 
     @FindBy(css = "input[ng-model='fName']")

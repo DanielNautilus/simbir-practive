@@ -3,6 +3,7 @@ package org.globalsqa.tests;
 import io.qameta.allure.*;
 import org.globalsqa.helpers.LocalStorageHelper;
 import org.globalsqa.models.CustomerModel;
+import org.globalsqa.pages.AddCustomerPage;
 import org.globalsqa.pages.CustomersListPage;
 import org.globalsqa.pages.ManagerPage;
 import org.junit.jupiter.api.Assertions;
@@ -27,21 +28,25 @@ public class CustomerSearchTest extends BaseTests {
     @Execution(ExecutionMode.CONCURRENT)
     public void testCustomerSearchFullNameMatchCustomerExist() {
         //Arrange
-
-        String expectedCustomerName = "Hermoine";
         ManagerPage managerPage = new ManagerPage(driver).navigate();
-        CustomersListPage customerListPage = managerPage.clickCustomers();
         LocalStorageHelper localStorageHelper = new LocalStorageHelper(driver);
         int currentMaxId = localStorageHelper.getMaxUserId();
         CustomerModel expectedCustomer = new CustomerModel("Daniel","Yurtaev","444431",currentMaxId+1);
+        AddCustomerPage addCustomerPage = managerPage.clickAddCustomer();
+        addCustomerPage
+                .setFirstName(expectedCustomer.getFirstName())
+                .setLastName(expectedCustomer.getLastName())
+                .setPostCode(expectedCustomer.getPostCode())
+                .submitCreationForm();
 
         // Act
+        CustomersListPage customerListPage = addCustomerPage.clickCustomers();
         WebElement customerRow = customerListPage
-                .searchCustomer(expectedCustomerName)
+                .searchCustomer(expectedCustomer.getFirstName())
                 .customersTableComponent
-                .findCustomerByName(expectedCustomerName);
+                .findCustomerByName(expectedCustomer.getFirstName());
 
         //Assert
-        Assertions.assertNotNull(customerRow, "Customer with name: " + expectedCustomerName + " not found"); //is Customer with name exist in customers list
+        Assertions.assertNotNull(customerRow, "Customer with name: " + expectedCustomer.getFirstName() + " not found"); //is Customer with name exist in customers list
     }
 }

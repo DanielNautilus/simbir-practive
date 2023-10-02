@@ -11,7 +11,7 @@ public class CustomersTableComponent extends BaseComponent{
     @FindBy(xpath = "//tbody//tr")
     private List<WebElement> customerRows;
 
-    @FindBy(xpath = "/html/body/div/div/div[2]/div/div[2]/div/div/table/thead/tr/td[1]/a")
+    @FindBy(xpath = "//a[contains(@ng-click, \"sortType = 'fName'\")]")
     private WebElement firstNameColumn;
 
 

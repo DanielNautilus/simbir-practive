@@ -10,7 +10,7 @@ import org.openqa.selenium.support.PageFactory;
 
 import java.util.List;
 
-public class CustomersListPage extends BasePage {
+public class CustomersListPage extends ManagerPage {
     @FindBy(css = "input[ng-model='searchCustomer']")
     private WebElement searchCustomerInput;
 

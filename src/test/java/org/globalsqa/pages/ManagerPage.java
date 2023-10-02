@@ -27,13 +27,15 @@ public class ManagerPage extends  BasePage{
         driver.get(getUri());
         return this;
     }
+
     @Step("Open Add Customer Page")
-    public AddCustomerPage clickAddCustomer(){
+    public AddCustomerPage clickAddCustomer() {
         navigateCustomerCreationButton.click();
         return new AddCustomerPage(driver);
     }
+
     @Step("Open Customers List Page")
-    public CustomersListPage clickCustomers(){
+    public CustomersListPage clickCustomers() {
         navigateCustomersListButton.click();
         return new CustomersListPage(driver);
     }
