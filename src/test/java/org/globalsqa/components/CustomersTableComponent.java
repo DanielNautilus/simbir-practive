@@ -8,7 +8,7 @@ import org.openqa.selenium.support.FindBy;
 import java.util.List;
 
 public class CustomersTableComponent extends BaseComponent{
-    @FindBy(xpath = "//tbody//tr")
+    @FindBy(css = "tbody tr.ng-scope")
     private List<WebElement> customerRows;
 
     @FindBy(xpath = "//a[contains(@ng-click, \"sortType = 'fName'\")]")

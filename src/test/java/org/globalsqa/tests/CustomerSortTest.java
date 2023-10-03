@@ -6,7 +6,6 @@ import org.globalsqa.pages.CustomersListPage;
 import org.globalsqa.pages.ManagerPage;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.parallel.Execution;
 import org.junit.jupiter.api.parallel.ExecutionMode;
@@ -30,7 +29,7 @@ public class CustomerSortTest extends BaseTests {
         // Arrange
         String sortOrder = "descending";
         ManagerPage managerPage = new ManagerPage(driver).navigate();
-        CustomersListPage customerListPage = managerPage.clickCustomers();
+        CustomersListPage customerListPage = managerPage.navigateCustomersListPage();
 
         // Act
         List<String> customerNames =customerListPage

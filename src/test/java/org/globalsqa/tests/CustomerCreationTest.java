@@ -1,12 +1,18 @@
 package org.globalsqa.tests;
 
-import io.qameta.allure.*;
+import io.qameta.allure.Description;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
+import io.qameta.allure.Step;
 import org.globalsqa.helpers.LocalStorageHelper;
-import org.globalsqa.helpers.NativeBrowserDialogHelper;
 import org.globalsqa.models.CustomerModel;
 import org.globalsqa.pages.AddCustomerPage;
 import org.globalsqa.pages.ManagerPage;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.parallel.Execution;
 import org.junit.jupiter.api.parallel.ExecutionMode;
 
@@ -23,7 +29,7 @@ public class CustomerCreationTest extends BaseTests {
     @Feature("Creation")
     @Severity(SeverityLevel.CRITICAL)
     @DisplayName("Create customer: added, set in local storage")
-    @Description("Set all fields creat customer, added to local storage")
+    @Description("Set all fields create customer, added to local storage")
     @Execution(ExecutionMode.CONCURRENT)
     public void testCustomerCreationSingleAddedRecordInLocalStorage() {
         // Arrange
@@ -39,7 +45,7 @@ public class CustomerCreationTest extends BaseTests {
         String expectedDialogText = "Customer added successfully with customer id :" + expectedUserId;
 
         // Act
-        AddCustomerPage addCustomerPage = managerPage.clickAddCustomer();
+        AddCustomerPage addCustomerPage = managerPage.navigateAddCustomerPage();
         addCustomerPage
                 .setFirstName(expectedCustomer.getFirstName())
                 .setLastName(expectedCustomer.getLastName())

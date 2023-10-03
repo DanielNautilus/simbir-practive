@@ -1,5 +1,6 @@
 package org.globalsqa.helpers;
-import org.json.JSONArray;
+
+import io.qameta.allure.Step;
 import org.json.JSONObject;
 import org.globalsqa.models.CustomerModel;
 import org.openqa.selenium.JavascriptExecutor;
@@ -14,6 +15,7 @@ public class LocalStorageHelper extends BaseHelper{
         super(driver);
         PageFactory.initElements(driver,this);
     }
+    @Step("Get maximum at user id in Local Storage")
     public int getMaxUserId() {
         String localStorageData = (String) ((JavascriptExecutor) driver).executeScript(
                 "return window.localStorage.getItem('maxUserId');");
@@ -30,6 +32,8 @@ public class LocalStorageHelper extends BaseHelper{
 
         return maxUserId;
     }
+
+    @Step("Get customers from Local Storage")
     public List<CustomerModel> getCustomersFromLocalStorage() {
         String localStorageData = (String) ((JavascriptExecutor) driver).executeScript(
                 "return window.localStorage.getItem('User');");
@@ -54,6 +58,7 @@ public class LocalStorageHelper extends BaseHelper{
         return customers;
     }
 
+    @Step("Clear Storage after test")
     public void clearLocalStorage() {
         ((JavascriptExecutor) driver).executeScript("localStorage.clear();");
     }

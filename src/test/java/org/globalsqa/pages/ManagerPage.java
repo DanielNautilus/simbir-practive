@@ -29,13 +29,13 @@ public class ManagerPage extends  BasePage{
     }
 
     @Step("Open Add Customer Page")
-    public AddCustomerPage clickAddCustomer() {
+    public AddCustomerPage navigateAddCustomerPage() {
         navigateCustomerCreationButton.click();
         return new AddCustomerPage(driver);
     }
 
     @Step("Open Customers List Page")
-    public CustomersListPage clickCustomers() {
+    public CustomersListPage navigateCustomersListPage() {
         navigateCustomersListButton.click();
         return new CustomersListPage(driver);
     }

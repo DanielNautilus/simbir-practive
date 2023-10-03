@@ -20,11 +20,12 @@ abstract class BasePage {
         PageFactory.initElements(driver, this);
     }
 
-    protected String getUri(){
+    protected String getUri() {
         String url = ConfigReader.getProperty("base.url");
         return url + path;
     }
-    public BasePage navigate(){
+
+    public BasePage navigate() {
         driver.get(getUri());
         return this;
     }
