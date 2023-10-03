@@ -34,10 +34,11 @@ public class CustomerSearchTest extends BaseTests {
         //Pre-condition: Added new customer for search
         AddCustomerPage addCustomerPage = managerPage.navigateAddCustomerPage();
         addCustomerPage
-                .setFirstName(expectedCustomer.getFirstName())
-                .setLastName(expectedCustomer.getLastName())
-                .setPostCode(expectedCustomer.getPostCode())
-                .submitCreationForm();
+                .createCustomer(
+                        expectedCustomer.getFirstName(),
+                        expectedCustomer.getLastName(),
+                        expectedCustomer.getPostCode()
+                );
 
         // Act
         CustomersListPage customerListPage = addCustomerPage.navigateCustomersListPage();

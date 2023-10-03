@@ -47,10 +47,11 @@ public class CustomerCreationTest extends BaseTests {
         // Act
         AddCustomerPage addCustomerPage = managerPage.navigateAddCustomerPage();
         addCustomerPage
-                .setFirstName(expectedCustomer.getFirstName())
-                .setLastName(expectedCustomer.getLastName())
-                .setPostCode(expectedCustomer.getPostCode())
-                .submitCreationForm();
+                .createCustomer(
+                        expectedCustomer.getFirstName(),
+                        expectedCustomer.getLastName(),
+                        expectedCustomer.getPostCode()
+                );
 
         // Assert
         assertLocalStorageContainsCustomer(expectedCustomer, localStorageHelper.getCustomersFromLocalStorage());

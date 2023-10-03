@@ -59,4 +59,11 @@ public class AddCustomerPage extends ManagerPage {
     public String getConfirmCreationAlertText() {
         return dialogHelper.getAlertText();
     }
+    public AddCustomerPage createCustomer(String firstName,String lastName,String postCode) {
+        setFirstName(firstName);
+        setLastName(lastName);
+        setPostCode(postCode);
+        submitCreationForm();
+        return this;
+    }
 }
