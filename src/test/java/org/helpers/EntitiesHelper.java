@@ -1,5 +1,6 @@
 package org.helpers;
 
+import io.restassured.response.Response;
 import org.apitests.models.Addition;
 import org.apitests.models.Entity;
 import org.apitests.models.IdentifiableModel;
@@ -38,5 +39,18 @@ public class EntitiesHelper {
                 .filter(Objects::nonNull)
                 .max(Comparator.comparingInt(Integer::intValue))
                 .orElse(0);
+    }
+    public static List<Entity> getAllEntitiesFormResponse(Response response){
+        return response.jsonPath().getList("entity", Entity.class);
+    }
+    public static Integer getEntityIdFormResponse(Response response){
+        return Integer.parseInt(response
+                .body()
+                .asString());
+    }
+    public static Entity getEntityFormResponse(Response response){
+        return response
+                .body()
+                .as(Entity.class);
     }
 }

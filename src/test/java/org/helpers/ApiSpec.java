@@ -21,8 +21,4 @@ public class ApiSpec {
             .header("Accept", "text/plain")
             .contentType(ContentType.JSON);
 
-
-    public static ResponseSpecification responseSpec = new ResponseSpecBuilder()
-            .log(LogDetail.BODY)
-            .build();
 }

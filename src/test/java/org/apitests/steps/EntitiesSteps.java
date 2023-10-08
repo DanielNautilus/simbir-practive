@@ -1,5 +1,6 @@
 package org.apitests.steps;
 
+import io.qameta.allure.Step;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import org.apitests.models.Entity;
@@ -8,7 +9,6 @@ import org.helpers.ConfigReader;
 import org.apitests.models.EntitySearchTerm;
 
 import java.lang.reflect.Field;
-import java.util.List;
 
 public class EntitiesSteps {
     private static final String CREATE_ENDPOINT = ConfigReader.getProperty("test.api.entityEndpoints.create");
@@ -19,30 +19,29 @@ public class EntitiesSteps {
 
     private static final RequestSpecification requestSpecSetJsonGetJson = ApiSpec.requestSpecSetJsonGetJson;
     private static final RequestSpecification requestSpecSetJsonGetText = ApiSpec.requestSpecSetJsonGetText;
-    public static Integer createEntity( Entity entity) {
-        String responseText = requestSpecSetJsonGetText
-                    .body(entity)
+    @Step("Add entity {entity}")
+    public static synchronized Response createEntity( Entity entity) {
+        return requestSpecSetJsonGetText
+                .body(entity)
                 .when()
-                    .post(CREATE_ENDPOINT)
+                .post(CREATE_ENDPOINT)
                 .then()
-                    .statusCode(200)
-                    .extract()
-                    .response()
-                    .body()
-                    .asString();
-        return Integer.parseInt(responseText);
+                .statusCode(200)
+                .extract()
+                .response();
     }
-    public static Entity getEntity(Integer entityId) {
+    @Step("Get entity with ID:{entityId}")
+    public static synchronized Response getEntity(Integer entityId) {
         return requestSpecSetJsonGetJson
                 .when()
                     .get(GET_ENDPOINT + entityId)
                 .then()
                     .extract()
-                    .response()
-                    .as(Entity.class);
+                    .response();
     }
-    public static void updateEntity( Integer entityId, Entity entity) {
-        requestSpecSetJsonGetText
+    @Step("Update entity with ID:{entityId}")
+    public static synchronized Response updateEntity( Integer entityId, Entity entity) {
+        return requestSpecSetJsonGetJson
                     .body(entity)
                 .when()
                     .patch(PATCH_ENDPOINT + entityId)
@@ -51,8 +50,9 @@ public class EntitiesSteps {
                     .extract()
                     .response();
     }
-    public static void deleteEntity(Integer entityId) {
-     requestSpecSetJsonGetText
+    @Step("Delete entity with ID:{entityId}")
+    public static synchronized Response deleteEntity(Integer entityId) {
+     return requestSpecSetJsonGetText
             .when()
                 .delete(DELETE_ENDPOINT + entityId)
             .then()
@@ -60,7 +60,8 @@ public class EntitiesSteps {
                 .extract()
                 .response();
     }
-    public static List<Entity> getAllEntities( EntitySearchTerm searchTerm) {
+    @Step("Search entity")
+    public static synchronized Response getAllEntities( EntitySearchTerm searchTerm) {
         RequestSpecification request = requestSpecSetJsonGetJson;
         addSearchParamsToRequest(request, searchTerm);
 
@@ -69,12 +70,10 @@ public class EntitiesSteps {
                     .get(GET_ALL_ENDPOINT)
                 .then()
                     .extract()
-                    .response()
-                        .jsonPath()
-                        .getList("entity", Entity.class);
-    }
+                    .response();
 
-    private static void addSearchParamsToRequest(RequestSpecification request, Object searchTerm) {
+    }
+    private static synchronized void addSearchParamsToRequest(RequestSpecification request, Object searchTerm) {
         if (searchTerm != null) {
             Class<?> searchTermClass = searchTerm.getClass();
             Field[] fields = searchTermClass.getDeclaredFields();
@@ -91,13 +90,6 @@ public class EntitiesSteps {
                     e.printStackTrace();
                 }
             }
-        }
-    }
-    public static void deleteAllEntities() {
-        List<Entity> entities = getAllEntities(null);
-
-        for (Entity entity : entities) {
-            deleteEntity(entity.getId());
         }
     }
 }

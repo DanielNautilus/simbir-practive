@@ -1,25 +1,29 @@
 package org.apitests.tests;
 
+import io.qameta.allure.*;
+import io.restassured.response.Response;
 import org.apitests.asserts.EntityAsserts;
 import org.apitests.models.Addition;
 import org.apitests.models.Entity;
 import org.apitests.steps.EntitiesSteps;
 import org.helpers.EntitiesHelper;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.parallel.Execution;
+import org.junit.jupiter.api.parallel.ExecutionMode;
 
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
+@Epic("Entities Management")
+@Feature("Getting")
+@DisplayName("Getting entity tests")
+@Execution(ExecutionMode.CONCURRENT)
 public class GettingEntityTests extends BaseTest{
 
     @Test
+    @Severity(SeverityLevel.CRITICAL)
+    @DisplayName("Getting verified entities")
+    @Description("Entities exist")
     public void testGetSingleEntity(){
         //pre-condition
-        List<Entity> entityList = EntitiesSteps.getAllEntities(null);
-        Integer expectedEntityId = EntitiesHelper.getMaxEntityId(entityList) + 1;
-        Integer expectedAdditionId = EntitiesHelper.getMaxAdditionIdFromEntities(entityList) + 1;
         var expectedEntity = new Entity(
                 "name1",
                 true,
@@ -29,11 +33,13 @@ public class GettingEntityTests extends BaseTest{
                 ),
                 new Integer[]{42, 87, 15}
         );
-        Integer actualEntityId = EntitiesSteps.createEntity(expectedEntity);
+        Integer actualEntityId = EntitiesHelper.getEntityIdFormResponse(EntitiesSteps.createEntity(expectedEntity));
+        // Act
+        Response response = EntitiesSteps.getEntity(actualEntityId);
+        Entity actualEntity = EntitiesHelper.getEntityFormResponse(response);
 
-        //act
-        Entity actualEntity = EntitiesSteps.getEntity(actualEntityId);
-        EntityAsserts.assertEntityEquivalent(expectedEntity,expectedEntityId,expectedAdditionId,actualEntity);
+        //Assert
+        EntityAsserts.assertEntityEquivalent(expectedEntity, actualEntity);
 
         //post action
         EntitiesSteps.deleteEntity(actualEntityId);
