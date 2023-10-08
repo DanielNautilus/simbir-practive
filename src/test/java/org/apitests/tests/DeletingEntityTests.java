@@ -5,6 +5,7 @@ import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
+import io.restassured.response.Response;
 import org.apitests.models.Addition;
 import org.apitests.models.Entity;
 import org.apitests.steps.EntitiesSteps;
@@ -35,13 +36,13 @@ public class DeletingEntityTests extends BaseTest {
                 ),
                 new Integer[]{42, 87, 15});
 
-        var response = EntitiesSteps.createEntity(entity);
-        var entityId = EntitiesHelper.getEntityIdFormResponse(response);
+        Response response = EntitiesSteps.createEntity(entity);
+        Integer entityId = EntitiesHelper.getEntityIdFormResponse(response);
         // Act
         EntitiesSteps.deleteEntity(entityId);
 
         // Assert
-        var responseAfterDelete = EntitiesSteps.getEntity(entityId);
+        Response responseAfterDelete = EntitiesSteps.getEntity(entityId);
         assertEquals(500, responseAfterDelete.statusCode());
         assertTrue(responseAfterDelete.body().asString().contains("no rows in result set"));
 

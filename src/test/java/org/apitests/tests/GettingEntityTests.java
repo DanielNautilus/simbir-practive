@@ -24,7 +24,7 @@ public class GettingEntityTests extends BaseTest{
     @Description("Entity exist")
     public void testGetSingleEntity(){
         //pre-condition
-        var expectedEntity = new Entity(
+        Entity expectedEntity = new Entity(
                 "name1",
                 true,
                 new Addition(

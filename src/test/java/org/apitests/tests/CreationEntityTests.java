@@ -29,7 +29,7 @@ public class CreationEntityTests extends BaseTest {
     @Description("Set all fields create entity")
     public void testCreateEntityIdAutoincrement() {
         //Pre-condition
-        var expectedEntity = new Entity(
+        Entity expectedEntity = new Entity(
                 "name1",
                 true,
                 new Addition(
