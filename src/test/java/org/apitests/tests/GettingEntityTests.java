@@ -20,8 +20,8 @@ public class GettingEntityTests extends BaseTest{
 
     @Test
     @Severity(SeverityLevel.CRITICAL)
-    @DisplayName("Getting verified entities")
-    @Description("Entities exist")
+    @DisplayName("Getting single entity")
+    @Description("Entity exist")
     public void testGetSingleEntity(){
         //pre-condition
         var expectedEntity = new Entity(
