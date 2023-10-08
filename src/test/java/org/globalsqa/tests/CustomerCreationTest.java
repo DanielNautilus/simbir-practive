@@ -6,7 +6,7 @@ import io.qameta.allure.Feature;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import io.qameta.allure.Step;
-import org.globalsqa.helpers.LocalStorageHelper;
+import org.helpers.LocalStorageHelper;
 import org.globalsqa.models.CustomerModel;
 import org.globalsqa.pages.AddCustomerPage;
 import org.globalsqa.pages.ManagerPage;
@@ -22,7 +22,7 @@ import java.util.List;
 @Feature("Creation")
 @DisplayName("Create customer creation tests")
 @Execution(ExecutionMode.CONCURRENT)
-public class CustomerCreationTest extends BaseTests {
+public class CustomerCreationTest extends BaseTest {
 
     @Test
     @Epic("Customer Management")

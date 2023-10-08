@@ -1,4 +1,4 @@
-package org.globalsqa.helpers;
+package org.helpers;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;

@@ -1,4 +1,4 @@
-package org.globalsqa.helpers;
+package org.helpers;
 
 import java.io.FileInputStream;
 import java.io.IOException;
