@@ -1,24 +1,50 @@
 package org.helpers;
 
-import io.restassured.builder.ResponseSpecBuilder;
-import io.restassured.filter.log.LogDetail;
+import io.restassured.RestAssured;
+import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
-import io.restassured.specification.ResponseSpecification;
-
-import static io.restassured.RestAssured.given;
+import org.helpers.ConfigReader;
 
 public class ApiSpec {
     private static final String BASE_URL = ConfigReader.getProperty("test.api.url");
 
-    public static RequestSpecification requestSpecSetJsonGetJson = given()
-            .baseUri(BASE_URL)
-            .header("Accept", "application/json")
-            .contentType(ContentType.JSON);
+    public static RequestSpecification requestSpecSetJsonGetJson() {
+        return new RequestSpecBuilder()
+                .setBaseUri(BASE_URL)
+                .addHeader("Accept", "application/json")
+                .setContentType(ContentType.JSON)
+                .build();
+    }
+    public static RequestSpecification createRequestSpecSetJsonGetText() {
+        return new RequestSpecBuilder()
+                .setBaseUri(BASE_URL)
+                .addHeader("Accept", "text/plain")
+                .setContentType(ContentType.JSON)
+                .build();
+    }
 
-    public static RequestSpecification requestSpecSetJsonGetText = given()
-            .baseUri(BASE_URL)
-            .header("Accept", "text/plain")
-            .contentType(ContentType.JSON);
 
+//    public static ThreadLocal<RequestSpecification> requestSpecSetJsonGetJson = ThreadLocal.withInitial(() ->
+//            new RequestSpecBuilder()
+//                    .setBaseUri(BASE_URL)
+//                    .addHeader("Accept", "application/json")
+//                    .setContentType(ContentType.JSON)
+//                    .build()
+//    );
+//
+//    public static ThreadLocal<RequestSpecification> requestSpecSetJsonGetText = ThreadLocal.withInitial(() ->
+//            new RequestSpecBuilder()
+//                    .setBaseUri(BASE_URL)
+//                    .addHeader("Accept", "text/plain")
+//                    .setContentType(ContentType.JSON)
+//                    .build()
+//    );
+//    public static RequestSpecification givenJsonGetJson() {
+//        return requestSpecSetJsonGetJson.get();
+//    }
+//
+//    public static RequestSpecification givenJsonGetText() {
+//        return requestSpecSetJsonGetText.get();
+//    }
 }

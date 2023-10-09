@@ -1,27 +1,29 @@
 package org.apitests.steps;
 
 import io.qameta.allure.Step;
+import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import org.apitests.models.Entity;
-import org.helpers.ApiSpec;
-import org.helpers.ConfigReader;
 import org.apitests.models.EntitySearchTerm;
+import org.helpers.ApiSpec;
 
 import java.lang.reflect.Field;
 
-public class EntitiesSteps {
-    private static final String CREATE_ENDPOINT = ConfigReader.getProperty("test.api.entityEndpoints.create");
-    private static final String DELETE_ENDPOINT = ConfigReader.getProperty("test.api.entityEndpoints.delete");
-    private static final String GET_ENDPOINT = ConfigReader.getProperty("test.api.entityEndpoints.get");
-    private static final String GET_ALL_ENDPOINT = ConfigReader.getProperty("test.api.entityEndpoints.getAll");
-    private static final String PATCH_ENDPOINT = ConfigReader.getProperty("test.api.entityEndpoints.patch");
 
-    private static final RequestSpecification requestSpecSetJsonGetJson = ApiSpec.requestSpecSetJsonGetJson;
-    private static final RequestSpecification requestSpecSetJsonGetText = ApiSpec.requestSpecSetJsonGetText;
+public class EntitiesSteps {
+    private static final String CREATE_ENDPOINT = "/create";
+    private static final String DELETE_ENDPOINT = "/delete/";
+    private static final String GET_ENDPOINT = "/get/";
+    private static final String GET_ALL_ENDPOINT = "/getAll";
+    private static final String PATCH_ENDPOINT = "/patch/";
+
     @Step("Add entity {entity}")
-    public static synchronized Response createEntity( Entity entity) {
-        return requestSpecSetJsonGetText
+    public static Response createEntity(Entity entity) {
+        RequestSpecification requestSpec = ApiSpec.requestSpecSetJsonGetJson();
+
+        return RestAssured.given()
+                .spec(requestSpec)
                 .body(entity)
                 .when()
                 .post(CREATE_ENDPOINT)
@@ -30,50 +32,61 @@ public class EntitiesSteps {
                 .extract()
                 .response();
     }
+
     @Step("Get entity with ID:{entityId}")
-    public static synchronized Response getEntity(Integer entityId) {
-        return requestSpecSetJsonGetJson
+    public static Response getEntity(Integer entityId) {
+        RequestSpecification requestSpec = ApiSpec.requestSpecSetJsonGetJson();
+        return RestAssured.given()
+                .spec(requestSpec)
                 .when()
-                    .get(GET_ENDPOINT + entityId)
+                .get(GET_ENDPOINT + entityId)
                 .then()
-                    .extract()
-                    .response();
+                .extract()
+                .response();
     }
+
     @Step("Update entity with ID:{entityId}")
-    public static synchronized Response updateEntity( Integer entityId, Entity entity) {
-        return requestSpecSetJsonGetJson
-                    .body(entity)
+    public static Response updateEntity(Integer entityId, Entity entity) {
+        RequestSpecification requestSpec = ApiSpec.requestSpecSetJsonGetJson();
+        return RestAssured.given()
+                .spec(requestSpec)
+                .body(entity)
                 .when()
-                    .patch(PATCH_ENDPOINT + entityId)
+                .patch(PATCH_ENDPOINT + entityId)
                 .then()
-                    .statusCode(204)
-                    .extract()
-                    .response();
-    }
-    @Step("Delete entity with ID:{entityId}")
-    public static synchronized Response deleteEntity(Integer entityId) {
-     return requestSpecSetJsonGetText
-            .when()
-                .delete(DELETE_ENDPOINT + entityId)
-            .then()
                 .statusCode(204)
                 .extract()
                 .response();
     }
+
+    @Step("Delete entity with ID:{entityId}")
+    public static Response deleteEntity(Integer entityId) {
+        RequestSpecification requestSpec = ApiSpec.requestSpecSetJsonGetJson();
+        return RestAssured.given()
+                .spec(requestSpec)
+                .when()
+                .delete(DELETE_ENDPOINT + entityId)
+                .then()
+                .statusCode(204)
+                .extract()
+                .response();
+    }
+
     @Step("Search entity")
-    public static synchronized Response getAllEntities( EntitySearchTerm searchTerm) {
-        RequestSpecification request = requestSpecSetJsonGetJson;
+    public static Response getAllEntities(EntitySearchTerm searchTerm) {
+        RequestSpecification requestSpec = ApiSpec.requestSpecSetJsonGetJson();
+        RequestSpecification request = RestAssured.given().spec(requestSpec);
         addSearchParamsToRequest(request, searchTerm);
 
         return request
                 .when()
-                    .get(GET_ALL_ENDPOINT)
+                .get(GET_ALL_ENDPOINT)
                 .then()
-                    .extract()
-                    .response();
-
+                .extract()
+                .response();
     }
-    private static synchronized void addSearchParamsToRequest(RequestSpecification request, Object searchTerm) {
+
+    private static void addSearchParamsToRequest(RequestSpecification request, Object searchTerm) {
         if (searchTerm != null) {
             Class<?> searchTermClass = searchTerm.getClass();
             Field[] fields = searchTermClass.getDeclaredFields();
