@@ -41,7 +41,6 @@ public class EntitiesSteps {
                 .when()
                 .get(GET_ENDPOINT + entityId)
                 .then()
-                .log().all()
                 .extract()
                 .response();
     }
