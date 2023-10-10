@@ -1,4 +1,4 @@
-package org.globalsqa.helpers;
+package org.helpers;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -7,7 +7,7 @@ import java.util.Properties;
 public class ConfigReader {
     private static Properties properties;
 
-    public static synchronized void loadConfig() {
+    public static void loadConfig() {
         if (properties == null) {
             properties = new Properties();
             try {

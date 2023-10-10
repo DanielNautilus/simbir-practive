@@ -1,4 +1,4 @@
-package org.globalsqa.helpers;
+package org.helpers;
 
 import io.qameta.allure.Step;
 import org.json.JSONObject;

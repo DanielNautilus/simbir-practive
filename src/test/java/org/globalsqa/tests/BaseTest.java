@@ -1,13 +1,13 @@
 package org.globalsqa.tests;
 
-import org.globalsqa.helpers.DriverHelper;
-import org.globalsqa.helpers.LocalStorageHelper;
+import org.helpers.DriverHelper;
+import org.helpers.LocalStorageHelper;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.openqa.selenium.WebDriver;
 
-abstract class BaseTests {
+abstract class BaseTest {
     protected WebDriver driver;
     protected LocalStorageHelper localStorageHelper;
 

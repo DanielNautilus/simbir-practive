@@ -1,4 +1,4 @@
-package org.globalsqa.helpers;
+package org.helpers;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;

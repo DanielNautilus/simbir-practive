@@ -1,4 +1,4 @@
-package org.globalsqa.helpers;
+package org.helpers;
 
 import java.util.ArrayList;
 import java.util.Collections;

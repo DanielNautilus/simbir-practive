@@ -1,7 +1,7 @@
 package org.globalsqa.tests;
 
 import io.qameta.allure.*;
-import org.globalsqa.helpers.SortHelper;
+import org.helpers.SortHelper;
 import org.globalsqa.pages.CustomersListPage;
 import org.globalsqa.pages.ManagerPage;
 import org.junit.jupiter.api.Assertions;
@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 @Feature("Sort")
 @DisplayName("Create customer sorting tests")
 @Execution(ExecutionMode.CONCURRENT)
-public class CustomerSortTest extends BaseTests {
+public class CustomerSortTest extends BaseTest {
     @Test
     @Epic("Customer Management")
     @Feature("Sort")

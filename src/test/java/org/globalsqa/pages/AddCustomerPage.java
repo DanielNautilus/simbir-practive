@@ -1,8 +1,8 @@
 package org.globalsqa.pages;
 
 import io.qameta.allure.Step;
-import org.globalsqa.helpers.ConfigReader;
-import org.globalsqa.helpers.NativeBrowserDialogHelper;
+import org.helpers.ConfigReader;
+import org.helpers.NativeBrowserDialogHelper;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;

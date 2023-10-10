@@ -1,7 +1,7 @@
 package org.globalsqa.tests;
 
 import io.qameta.allure.*;
-import org.globalsqa.helpers.LocalStorageHelper;
+import org.helpers.LocalStorageHelper;
 import org.globalsqa.models.CustomerModel;
 import org.globalsqa.pages.AddCustomerPage;
 import org.globalsqa.pages.CustomersListPage;
@@ -16,7 +16,7 @@ import org.openqa.selenium.WebElement;
 @Feature("Search")
 @DisplayName("Create customer searching tests")
 @Execution(ExecutionMode.CONCURRENT)
-public class CustomerSearchTest extends BaseTests {
+public class CustomerSearchTest extends BaseTest {
 
     @Test
     @Epic("Customer Management")
