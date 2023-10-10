@@ -15,9 +15,12 @@ import org.junit.jupiter.api.parallel.ExecutionMode;
 
 import java.util.List;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.hasItems;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+
 @Epic("Entities Management")
 @Feature("Getting All")
 @DisplayName("Getting all entities tests")
@@ -29,20 +32,20 @@ public class GettingEntitiesAllTests extends BaseTest {
     @Description("Entities exist")
     public void testGettingAllVerifiedEntities() {
         // Pre-condition
-        Entity firstEntity = new Entity("Entity1",
+        Entity firstEntity = new Entity("Entity12",
                 true,
                 new Addition(
-                        "info",
-                        22
+                        "info1",
+                        42
                 ),
-                new Integer[]{42, 87, 15});
-        Entity secondEntity = new Entity("Entity2",
+                new Integer[]{41, 87, 15});
+        Entity secondEntity = new Entity("Entity21",
                 true,
                 new Addition(
-                        "info",
-                        22
+                        "info2",
+                        32
                 ),
-                new Integer[]{42, 87, 15});
+                new Integer[]{42, 87, 25});
 
         Integer firstEntityId = EntitiesHelper.getEntityIdFormResponse(EntitiesSteps.createEntity(firstEntity));
         Integer secondEntityId = EntitiesHelper.getEntityIdFormResponse(EntitiesSteps.createEntity(secondEntity));
@@ -52,30 +55,17 @@ public class GettingEntitiesAllTests extends BaseTest {
         searchTerm.setVerified(true);
 
         Response response = EntitiesSteps.getAllEntities(searchTerm);
-        List<Entity> allEntities =EntitiesHelper.getAllEntitiesFormResponse(response);
+        List<Entity> allEntities = EntitiesHelper.getAllEntitiesFormResponse(response);
 
         // Assert
-        boolean isFirstEntityFound = false;
-        boolean isSecondEntityFound = false;
-        for (Entity entity : allEntities) {
-            if (entity.getId().equals(firstEntityId)) {
-                isFirstEntityFound = true;
-                EntityAsserts.assertEntityEquivalent(firstEntity, entity);
-            }
-            if (entity.getId().equals(secondEntityId)) {
-                isSecondEntityFound = true;
-                EntityAsserts.assertEntityEquivalent(secondEntity, entity);
-            }
-        }
+        assertThat(allEntities, hasItems(firstEntity, secondEntity));
 
-        assertTrue(isFirstEntityFound);
-        assertTrue(isSecondEntityFound);
         assertEquals(200, response.statusCode());
         assertNotNull(allEntities);
         assertTrue(allEntities.size() >= 2);
 
         // Post-action: Удаляем созданные сущности после теста
-         EntitiesSteps.deleteEntity(firstEntityId);
-         EntitiesSteps.deleteEntity(secondEntityId);
+        EntitiesSteps.deleteEntity(firstEntityId);
+        EntitiesSteps.deleteEntity(secondEntityId);
     }
 }
