@@ -1,6 +1,5 @@
 package org.apitests.tests;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
@@ -17,8 +16,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.parallel.Execution;
 import org.junit.jupiter.api.parallel.ExecutionMode;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+
 @Epic("Entities Management")
 @Feature("Creation")
 @DisplayName("Create entity creation tests")
@@ -53,4 +52,5 @@ public class CreationEntityTests extends BaseTest {
         // Post-action
         EntitiesSteps.deleteEntity(actualEntityId);
     }
+
 }

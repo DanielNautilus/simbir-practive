@@ -17,6 +17,7 @@ import org.junit.jupiter.api.parallel.Execution;
 import org.junit.jupiter.api.parallel.ExecutionMode;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+
 @Epic("Entities Management")
 @Feature("Updated")
 @DisplayName("Updating entity tests")
@@ -46,7 +47,6 @@ public class UpdatingEntityTests extends BaseTest {
                         42
                 ),
                 new Integer[]{12, 34, 56});
-
         Response response = EntitiesSteps.updateEntity(entityId, updatedEntity);
         Entity updatedEntityFromServer = EntitiesHelper.getEntityFormResponse(EntitiesSteps.getEntity(entityId));
 

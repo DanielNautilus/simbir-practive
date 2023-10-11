@@ -17,6 +17,7 @@ import org.junit.jupiter.api.parallel.ExecutionMode;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+
 @Epic("Entities Management")
 @Feature("Deleting")
 @DisplayName("Delete entity deleting tests")
@@ -45,7 +46,6 @@ public class DeletingEntityTests extends BaseTest {
         Response responseAfterDelete = EntitiesSteps.getEntity(entityId);
         assertEquals(500, responseAfterDelete.statusCode());
         assertTrue(responseAfterDelete.body().asString().contains("no rows in result set"));
-
-
     }
+
 }

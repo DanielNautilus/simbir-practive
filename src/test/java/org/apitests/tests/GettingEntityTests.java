@@ -34,6 +34,7 @@ public class GettingEntityTests extends BaseTest{
                 new Integer[]{42, 87, 15}
         );
         Integer actualEntityId = EntitiesHelper.getEntityIdFormResponse(EntitiesSteps.createEntity(expectedEntity));
+
         // Act
         Response response = EntitiesSteps.getEntity(actualEntityId);
         Entity actualEntity = EntitiesHelper.getEntityFormResponse(response);

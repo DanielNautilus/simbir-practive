@@ -27,12 +27,14 @@ public class Entity implements IdentifiableModel {
     Integer[] importantNumbers;
     public Entity() {
     }
+
     public Entity(String title,Boolean verified,Addition addition,Integer[] importantNumbers){
         this.title = title;
         this.verified = verified;
         this.addition = addition;
         this.importantNumbers = importantNumbers;
     }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

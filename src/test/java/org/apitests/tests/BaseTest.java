@@ -13,8 +13,10 @@ abstract class BaseTest {
     protected static void setUp() {
         RestAssured.filters(new AllureRestAssured());
     }
+
     @AfterAll
     protected void tearDown() {
         RestAssured.reset();
     }
+
 }

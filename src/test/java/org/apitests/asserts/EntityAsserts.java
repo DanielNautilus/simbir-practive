@@ -24,6 +24,4 @@ public class EntityAsserts {
                 .isEqualTo(actualEntity);
     }
 
-
-
 }

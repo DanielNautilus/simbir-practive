@@ -48,9 +48,11 @@ public class EntitiesHelper {
                 .body()
                 .asString());
     }
+
     public static Entity getEntityFormResponse(Response response){
         return response
                 .body()
                 .as(Entity.class);
     }
+
 }

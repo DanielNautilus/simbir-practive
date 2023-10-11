@@ -23,6 +23,7 @@ public class Addition implements IdentifiableModel {
         this.additionalInfo = additionalInfo;
         this.additionalNumber = additionalNumber;
     }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
